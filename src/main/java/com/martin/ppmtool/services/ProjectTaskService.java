@@ -5,6 +5,7 @@ import com.martin.ppmtool.domain.ProjectTask;
 import com.martin.ppmtool.repositories.BacklogRepository;
 import com.martin.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,4 +52,7 @@ public class ProjectTaskService {
         return projectTaskRepository.save(projectTask);
     }
 
+    public Iterable<ProjectTask> findBacklogById(String id) {
+        return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
+    }
 }
