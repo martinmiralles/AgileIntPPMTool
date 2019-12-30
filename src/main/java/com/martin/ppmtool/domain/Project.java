@@ -38,6 +38,10 @@ public class Project {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date update_At;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project") //"project" matches the private Project object in the Backlog entity
+    private Backlog backlog;
+    //One Project only has one Backlog
+
     //EMPTY CONSTRUCTOR
     public Project()
     {
@@ -107,6 +111,14 @@ public class Project {
 
     public void setUpdate_At(Date update_At) {
         this.update_At = update_At;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
     @PrePersist
