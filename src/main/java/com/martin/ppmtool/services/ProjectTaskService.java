@@ -31,14 +31,17 @@ public class ProjectTaskService {
         //Update Backlog Sequence
         BacklogSequence++;
 
+        //Sequence is then set
+        backlog.setPTSequence((BacklogSequence));
+
         //Add Sequence to Project Task
         projectTask.setProjectSequence(projectIdentifier + "-" + BacklogSequence);
         projectTask.setProjectIdentifier(projectIdentifier);
 
         //INITIAL priority, when priority is null
-//        if(projectTask.getPriority()==0||projectTask.getPriority()==null){
-//            projectTask.setPriority(3);
-//        }
+        if(projectTask.getPriority()==null){//In the future, we need the projectTask.getPriority()==0 to handle the form
+            projectTask.setPriority(3);
+        }
 
         //INITIAL status, when status is null
         if(projectTask.getStatus()==""||projectTask.getStatus()==null){
