@@ -100,7 +100,14 @@ public class ProjectTaskService {
             throw new ProjectNotFoundException("Project Task '" + projectTask_id + "' does not exist in project '" + backlog_id + "'");
         }
 
-
         return projectTask;
+    }
+
+    public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String projectTask_id){
+        ProjectTask projectTask = projectTaskRepository.findByProjectSequence(updatedTask.getProjectSequence());
+
+        projectTask = updatedTask;
+
+        return projectTaskRepository.save(projectTask);
     }
 }
