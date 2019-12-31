@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectTaskService {
 
@@ -104,10 +106,18 @@ public class ProjectTaskService {
     }
 
     public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String projectTask_id){
-        ProjectTask projectTask = projectTaskRepository.findByProjectSequence(updatedTask.getProjectSequence());
+
+        ProjectTask projectTask = findProjectTaskByProjectSequence(backlog_id, projectTask_id);
 
         projectTask = updatedTask;
 
         return projectTaskRepository.save(projectTask);
+    }
+
+    public void deleteProjectTaskByProjectSequence(String backlog_id, String projectTask_id){
+
+        ProjectTask projectTask = findProjectTaskByProjectSequence(backlog_id, projectTask_id);
+
+        projectTaskRepository.delete(projectTask);
     }
 }

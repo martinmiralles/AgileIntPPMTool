@@ -21,8 +21,8 @@ public class Backlog {
     @JsonIgnore //breaks infinite recursion error
     private Project project;
 
-    //OneToMany projectTasks; a backlog can have 1 more more project tasks, but a project task can only belong to one backlog
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "backlog")
+    //OneToMany projectTasks; a backlog can have 1 more more Project Tasks, but a Project Task can only belong to one Backlog
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "backlog", orphanRemoval = true)
     private List<ProjectTask> projectTasks = new ArrayList<>();
 
     public Backlog()
