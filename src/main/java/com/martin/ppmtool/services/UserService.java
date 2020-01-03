@@ -1,6 +1,7 @@
 package com.martin.ppmtool.services;
 
 import com.martin.ppmtool.domain.User;
+import com.martin.ppmtool.exceptions.UsernameAlreadyExistsException;
 import com.martin.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,14 +17,22 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User saveUser(User newUser){
-        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 
-        //Username has to be unique (exception)
+        try{
+            newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
 
-        //Make sure that password and confirmPassword match
+            //Username has to be unique (exception)
+            newUser.setUsername(newUser.getUsername());
 
-        //Don't persis / show the confirmPassword
-        return userRepository.save(newUser);
+            //Make sure that password and confirmPassword match
+
+            //Don't persis / show the confirmPassword
+            return userRepository.save(newUser);
+        } catch (Exception e){
+            throw new UsernameAlreadyExistsException("Username '" + newUser.getUsername() + "' already exists");
+        }
+
+
     }
 
 }
