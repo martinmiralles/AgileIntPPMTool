@@ -2,9 +2,11 @@ package com.martin.ppmtool.services;
 
 import com.martin.ppmtool.domain.Backlog;
 import com.martin.ppmtool.domain.Project;
+import com.martin.ppmtool.domain.User;
 import com.martin.ppmtool.exceptions.ProjectIdException;
 import com.martin.ppmtool.repositories.BacklogRepository;
 import com.martin.ppmtool.repositories.ProjectRepository;
+import com.martin.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,18 @@ public class ProjectService {
     @Autowired
     private BacklogRepository backlogRepository;
 
-    public Project saveOrUpdateProject(Project project)
+    @Autowired
+    private UserRepository userRepository;
+
+    public Project saveOrUpdateProject(Project project, String username)
     {
         //LOGIC
         try
         {
+            User user = userRepository.findByUsername(username);
+
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
             if(project.getId()==null)
